@@ -1,9 +1,10 @@
 def intface (pos, ball)
     $interface = 1
     intx = 290
-    inty = 380
+    inty = 440
     whiler = 0
     fakex = 5
+    
     $control1 = pos.clone
     $control2 = ball.clone
     @sold =  pos.clone
@@ -146,7 +147,7 @@ def intloop2
         $clickstate3 = 0
         return arr
     elsif @soldmenu == 2
-        if @bb>0 && @sold < $control1
+        if @bb>1 && @sold < $control1
             @sold += 1
             @bb -= 1
         end
@@ -189,6 +190,11 @@ def intloop3
             $lander[i].unclicked
         end
         $clickstate3 = 0
+        $state = 2
+        @knappcirc2.remove
+        @knappL2.remove
+        nextturn
+        $deployphase = 0
         return arr
     elsif @soldmenu == 2
         if @bb>0 && @sold < $control1
@@ -202,7 +208,7 @@ def intloop3
         @soldmenu = 0
         
     elsif @soldmenu == 3
-        if @sold>1
+        if @sold>0 && 
             
             @sold -= 1
             @bb += 1
@@ -354,10 +360,71 @@ def attackera(landA, landF)
     return arr
 end
 
+
 def dodcheck
     for i in 0..$antalpelareclock
-        if $spelare[i].length = 3
+        if $spelare[i].length == 3
             $dod[i] = 1
         end
+    end
+end
+
+def setuptoptxt
+$toptxt = 'Initial Deploy phase'
+$toptext = Text.new(
+    $toptxt,
+    x: 400, y: 0,
+    
+    size: 20,
+    color: 'black',
+    
+    z: 5000
+)
+end
+def toptextupdate
+    if $state == 1
+        $toptext.remove
+        $toptext = Text.new(
+            'Initial Deploy',
+            x: 343, y: 7,
+            
+            size: 20,
+            color: 'black',
+            
+            z: 5000
+        )
+    elsif $state == 2
+        $toptext.remove
+        $toptext = Text.new(
+            'Deploy',
+            x: 368, y: 7,
+            
+            size: 20,
+            color: 'black',
+            
+            z: 5000
+        )
+    elsif $state == 3
+        $toptext.remove
+        $toptext = Text.new(
+            'Attack',
+            x: 368, y: 7,
+            
+            size: 20,
+            color: 'black',
+            
+            z: 5000
+        )
+    elsif $state == 4
+        $toptext.remove
+        $toptext = Text.new(
+            'Fortify',
+            x: 368, y: 7,
+            
+            size: 20,
+            color: 'black',
+            
+            z: 5000
+        )
     end
 end

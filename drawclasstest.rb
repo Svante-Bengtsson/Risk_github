@@ -17,7 +17,7 @@ set height: 500
 $state = 1
 $startaagd = 0
 #max spelare 4
-$antalspelare = 2
+$antalspelare = 4
 $antalpelareclock = $antalspelare.clone - 1
 $exitinitdepl = (($lander.length.to_i * 3)/$antalspelare.to_i).round
 
@@ -54,6 +54,7 @@ $soldnumbtxt = Text.new(
     color: 'black',
     z: 510
 )
+setuptoptxt
 
 
 
@@ -71,17 +72,19 @@ end
 
 update do
   if tick % 5 == 0
+    toptextupdate
     if $state == 1
         
         /inital deploy phase/
 
         for i in 0..$antalLander
             $lander[i].hover_click_update_deploy
+            updatecontinentess
         end
-        updatecontinentess
+        
 
     elsif $state == 2
-
+        
         /standard deploy phase/
         if $deployphase == 0
             $cursoldiers = howmanysoldiers
@@ -108,6 +111,7 @@ update do
         showcurrsold
 
     elsif $state == 3
+        
         lager = intloop2
         if lager != nil && lager.class == Array
             if lager.length == 2 && $interface == 0
@@ -122,6 +126,7 @@ update do
             $lander[i].hover_click_update_attack
         end
     elsif $state == 4
+       
         lager = intloop3
         if lager != nil && lager.class == Array
             if lager.length == 2 && $interface == 0

@@ -62,6 +62,8 @@ on :mouse_down do |event|
                         $lander[i].clicked
                         $clickstate3 = 1
                         $savestateattack = $lander[i].id
+                    elsif $savestateattack == nil
+                        #vet ej vad som hände här men det löste en bugg
                     elsif $lander[i].collission? == true && $attacker[$savestateattack].include?($lander[i].id) == true && $spelare[$pelaretur].include?($lander[i].id) == false && $clickstate3 == 1
                         arr = attackera($savestateattack, $lander[i].id)
                         if arr[0] == 1
@@ -76,7 +78,7 @@ on :mouse_down do |event|
                             $lander[i].sold(0)
                             $lander[i].nyfarg($spelare[$pelaretur][0], $spelare[$pelaretur][1], $spelare[$pelaretur][2])
                             continents(0)
-                            arr2 = intface(arr[0], arr[1])
+                            arr2 = intface((arr[0].to_i - 1), (arr[1].to_i + 1))
                             $attackedsave = i
                         end
                     end
@@ -118,31 +120,22 @@ on :mouse_down do |event|
                         $lander[i].clicked
                         $clickstate3 = 1
                         $savestateattack = $lander[i].id
-                    elsif $lander[i].collission? == true && $attacker[$savestateattack].include?($lander[i].id) == true && $spelare[$pelaretur].include?($lander[i].id) == false && $clickstate3 == 1
-                        arr = attackera($savestateattack, $lander[i].id)
-                        if arr[0] == 1
-                            $lander[$savestateattack].sold(arr[0])
-                            $lander[i].sold(arr[1])
-                        elsif arr[1] == 0
-                            for u in 0..$antalpelareclock
-                                $spelare[u].delete(i)
-                            end
-                            $spelare[$pelaretur].push(i)
-                            $lander[$savestateattack].sold(arr[0])
-                            $lander[i].sold(0)
-                            $lander[i].nyfarg($spelare[$pelaretur][0], $spelare[$pelaretur][1], $spelare[$pelaretur][2])
-                            continents(0)
-                            arr2 = intface(arr[0], arr[1])
-                            $attackedsave = i
-                        end
+                    elsif $savestateattack == nil
+                        #vet ej vad som hände här men det löste en bugg
+                    elsif $lander[i].collission? == true && $lander[i].clickread == 4 && $spelare[$pelaretur].include?($lander[i].id) == true && $clickstate3 == 1
+                        arr = [$savestateattack, $lander[i].id]
+                        $attackedsave = i
+                        arr2 = intface($lander[arr[0]].antal, $lander[arr[1]].antal)
+                        
+                    
                     end
                 end
                 if @knappcirc2.contains?(Window.mouse_x, Window.mouse_y)
-                    $state = 4
+                    $state = 2
                     @knappcirc2.remove
                     @knappL2.remove
                     nextturn
-                    state = 2
+                    $deployphase = 0
                 end
             else
                 if @intcirc3.contains?(Window.mouse_x, Window.mouse_y) 

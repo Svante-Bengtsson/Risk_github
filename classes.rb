@@ -44,6 +44,7 @@ class Land
 
 
     end
+
     def nyfarg(fragas, high, terr)
         @farg = fragas
         @highlight = high
@@ -99,17 +100,46 @@ class Land
         end
     end
     def sned(nuvland)
+        arr1 = []
         for i in 0...$attacker[nuvland].length
-            $spelare
-        end
-        for i in 0..$antalLander
-            for u in 0..($attacker[nuvland].length - 1)
-                if $lander[i].id == $attacker[nuvland][u]
-                    if $spelare[$pelaretur].index($lander[i].id) == nil
-                        $lander[i].attackstate
+            if $spelare[$pelaretur].index($attacker[nuvland][i]) != nil && arr1.index($lander[$attacker[nuvland][i]]) == nil
+                $lander[$attacker[nuvland][i]].fortify
+                arr1.push($lander[$attacker[nuvland][i]])
+                for u in 0...$attacker[i].length
+                    if $spelare[$pelaretur].index($attacker[i][u]) != nil && arr1.index($lander[$attacker[i][u]]) == nil
+                        $lander[$attacker[i][u]].fortify
+                        arr1.push($lander[$attacker[i][u]])
+                        for o in 0...$attacker[u].length
+                            if $spelare[$pelaretur].index($attacker[u][o]) != nil && arr1.index($lander[$attacker[u][o]]) == nil
+                                $lander[$attacker[u][o]].fortify
+                                arr1.push($lander[$attacker[u][o]])
+                                for p in 0...$attacker[o].length
+                                    if $spelare[$pelaretur].index($attacker[o][p]) != nil && arr1.index($lander[$attacker[o][p]]) == nil
+                                        $lander[$attacker[o][p]].fortify
+                                        arr1.push($lander[$attacker[o][p]])
+                                        for q in 0...$attacker[p].length
+                                            if $spelare[$pelaretur].index($attacker[p][q]) != nil && arr1.index($lander[$attacker[p][q]]) == nil
+                                                $lander[$attacker[p][q]].fortify
+                                                arr1.push($lander[$attacker[p][q]])
+                                                for m in 0...$attacker[q].length
+                                                    if $spelare[$pelaretur].index($attacker[q][m]) != nil && arr1.index($lander[$attacker[q][m]]) == nil
+                                                        $lander[$attacker[q][m]].fortify
+                                                        arr1.push($lander[$attacker[q][m]])
+                                                        
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                        end
                     end
                 end
             end
+        end
+        for i in 0..$antalLander
+            $lander[i].clickred
         end
     end
     def attackstate
@@ -131,8 +161,9 @@ class Land
     def fortify 
         @clicked = 4
     end 
-    
-
+    def clickred
+        @clickread = @clicked.clone
+    end
     def hover_click_update_deploy
         mousex = Window.mouse_x
         mousey = Window.mouse_y

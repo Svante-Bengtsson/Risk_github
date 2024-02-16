@@ -73,7 +73,7 @@ update do
         for i in 0..$antalLander
             $lander[i].hover_click_update_deploy
         end
-
+        updatecontinentess
 
     elsif $state == 2
 
@@ -94,7 +94,7 @@ update do
             end
             
         end
-        continents
+        updatecontinentess
         if $cursoldiers < 1
             $state = 3
         end
@@ -103,6 +103,11 @@ update do
 
     elsif $state == 3
         intloop
+        updatecontinentess
+        showcurrsold
+        for i in 0..$antalLander
+            $lander[i].hover_click_update_attack
+        end
     elsif $state == 4
         intloop
     end

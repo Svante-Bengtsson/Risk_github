@@ -41,17 +41,17 @@ on :mouse_down do |event|
                 end
             end
         elsif $state == 3
-            if $interface == 0
-            
-                for u in 0..$antalLander
-                    $lander[u].unclicked
+            p $interface
+            if $interface == 0  
+                for i in 0..$antalLander
+                    $lander[i].unclicked
                 end
                 for i in 0..$antalLander
-                    if $lander[i].collission? == true
-                        $lander[i].clicked
+                    if $lander[i].collission? == true && $spelare[$pelaretur].index($lander[i]) != nil
                         $lander[i].attacktargets(i)
+                        $lander[i].clicked
                     end
-                end  
+                end
             else
                 if @intcirc3.contains?(Window.mouse_x, Window.mouse_y) 
                     @soldmenu= 1
@@ -61,18 +61,6 @@ on :mouse_down do |event|
                     @soldmenu= 3
                 end
             end
-        end
-    end
-end
-
-
-
-
-on :mouse_down do |event|
-    case event.button
-    when :right
-        if $interface == 0
-            intface(0, 10)
         end
     end
 end

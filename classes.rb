@@ -13,6 +13,7 @@ class Land
         @terrcol = terr
         @agd = 0
         @clicked = 0
+        @cont = 0
     end
 
 
@@ -89,7 +90,9 @@ class Land
         for i in 0..$antalLander
             for u in 0..($attacker[nuvland].length - 1)
                 if $lander[i].id == $attacker[nuvland][u]
-                    $lander[i].attackstate
+                    if $spelare[$pelaretur].index($lander[i].id) == nil
+                        $lander[i].attackstate
+                    end
                 end
             end
         end
@@ -102,11 +105,15 @@ class Land
         @clicked = 0
     end
     def continen
-        @clicked = 4
+        @cont = 1
     end
     def uncontinen
-        @clicked = 0
+        @cont = 0
     end
+    def felsok
+        return @clicked
+    end
+    
 
     def hover_click_update_deploy
         mousex = Window.mouse_x
@@ -120,14 +127,11 @@ class Land
             elsif @clicked == 3 && @cirkel.contains?(Window.mouse_x, Window.mouse_y) == true
                 @cirkel.color = 'purple'
                 
-            elsif @clicked == 4 && @cirkel.contains?(Window.mouse_x, Window.mouse_y) == true
-                @cirkel.color = @highlight
-                
             elsif collission?
                 @cirkel.color = @highlight
                 
             else 
-                if @clicked == 4
+                if @cont == 1
                     @cirkel.color = @terrcol     
                     
 
@@ -153,12 +157,22 @@ class Land
                 @cirkel.color = 'black'
             elsif @clicked == 3 && @cirkel.contains?(Window.mouse_x, Window.mouse_y) == false
                 @cirkel.color = @highlight
+                
             elsif @clicked == 3 && @cirkel.contains?(Window.mouse_x, Window.mouse_y) == true
                 @cirkel.color = 'purple'
+
             elsif collission?
                 @cirkel.color = @highlight
+                
             else 
-                @cirkel.color = @farg         
+                if @cont == 1
+                    @cirkel.color = @terrcol     
+                    
+
+                else
+                    @cirkel.color = @farg 
+                    
+                end
             end
         else
             if @clicked == 1

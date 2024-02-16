@@ -123,6 +123,95 @@ def intloop
         @soldmenu = 0
     end 
 end
+def intloop2
+    if @soldmenu == 1
+        @intsquare.remove
+        @intcirc1.remove
+        @intcirc2.remove
+        @intcirc3.remove
+        @text1.remove
+        @text2.remove
+        @text3.remove
+        @text4.remove
+        @text5.remove
+        @text6.remove
+        $interface = 0
+        @soldmenu = 0
+        totsold = @sold.clone
+        landsold = @bb.clone
+        arr = [totsold, landsold]
+        for i in 0..$antalLander
+            $lander[i].unclicked
+        end
+        $clickstate3 = 0
+        return arr
+    elsif @soldmenu == 2
+        if @bb>0 && @sold < $control1
+            @sold += 1
+            @bb -= 1
+        end
+        
+        
+        @text6.text = @bb
+        @text5.text = @sold
+        @soldmenu = 0
+        
+    elsif @soldmenu == 3
+        if @sold>1
+            
+            @sold -= 1
+            @bb += 1
+        end
+        @text6.text = @bb
+        @text5.text = @sold
+        @soldmenu = 0
+    end 
+end
+
+def intloop3
+    if @soldmenu == 1
+        @intsquare.remove
+        @intcirc1.remove
+        @intcirc2.remove
+        @intcirc3.remove
+        @text1.remove
+        @text2.remove
+        @text3.remove
+        @text4.remove
+        @text5.remove
+        @text6.remove
+        $interface = 0
+        @soldmenu = 0
+        totsold = @sold.clone
+        landsold = @bb.clone
+        arr = [totsold, landsold]
+        for i in 0..$antalLander
+            $lander[i].unclicked
+        end
+        $clickstate3 = 0
+        return arr
+    elsif @soldmenu == 2
+        if @bb>0 && @sold < $control1
+            @sold += 1
+            @bb -= 1
+        end
+        
+        
+        @text6.text = @bb
+        @text5.text = @sold
+        @soldmenu = 0
+        
+    elsif @soldmenu == 3
+        if @sold>1
+            
+            @sold -= 1
+            @bb += 1
+        end
+        @text6.text = @bb
+        @text5.text = @sold
+        @soldmenu = 0
+    end 
+end
 
 
 def checkaagdklar
@@ -149,8 +238,29 @@ end
 def nextturn
     check = 0
     while check == 0
-        if $pelaretur.to_i < 3
+        if $pelaretur.to_i < $antalpelareclock
             $pelaretur += 1
+            if $dod[$pelaretur.to_i] != 0
+                if $pelaretur.to_i < $antalpelareclock
+                    $pelaretur += 1
+                    if $dod[$pelaretur.to_i] != 0
+                        if $pelaretur.to_i < $antalpelareclock
+                            $pelaretur += 1
+                            if $dod[$pelaretur.to_i] != 0
+                                if $pelaretur.to_i < $antalpelareclock
+                                    $pelaretur += 1
+                                else
+                                    $pelaretur = 0
+                                end
+                            end
+                        else
+                            $pelaretur = 0
+                        end
+                    end
+                else
+                    $pelaretur = 0
+                end
+            end
         else
             $pelaretur = 0
         end
@@ -161,4 +271,93 @@ def nextturn
 end
 def showcurrsold
     $soldnumbtxt.text = $cursoldiers
+end
+
+def createbutton
+    intx = 480
+    inty = 430
+    @knappL = Text.new(
+        'L',
+        x: intx + 250, y: inty + 10,
+        size: 30,
+        color: 'black',
+        z: 500,
+        rotate: -45,
+    )
+    @knappcirc = Circle.new(
+        x: intx + 260, y: inty +30,
+        radius: 25,
+        sectors: 32,
+        color: 'red',
+        z: 10
+    )
+end
+def createbutton2
+    intx = 480
+    inty = 430
+    @knappL2 = Text.new(
+        'L',
+        x: intx + 250, y: inty + 10,
+        size: 30,
+        color: 'black',
+        z: 500,
+        rotate: -45,
+    )
+    @knappcirc2 = Circle.new(
+        x: intx + 260, y: inty +30,
+        radius: 25,
+        sectors: 32,
+        color: 'red',
+        z: 10
+    )
+end
+def attackera(landA, landF)
+    asold = ($lander[landA].antal.clone - 1)
+    fsold = $lander[landF].antal.clone
+    exitloop = 0
+    while exitloop == 0
+        a1 = rand(1..6)
+        a2 = rand(1..6)
+        a3 = rand(1..6)
+        f1 = rand(1..6)
+        f2 = rand(1..6)
+        arra = [a1, a2, a3]
+        arra.sort
+        arrf = [f1, f2]
+        arrf.sort
+        if arra[0] > arrf[0]
+            fsold -= 1
+            if arra[1] > arrf[1]
+                fsold -= 1
+            elsif arra[1] < arrf[1]
+                asold -= 1
+            end
+        elsif arra[0] < arrf[0]
+            asold -= 1
+            if arra[1] > arrf[1]
+                fsold -= 1
+            elsif arra[1] < arrf[1]
+                asold -= 1
+            end
+        end
+        if asold <= 0 || fsold <= 0
+            exitloop = 1
+        end
+    end
+    if asold <= 0
+        asold = 0
+    elsif fsold <= 0
+        fsold = 0
+    end
+    asold += 1
+    arr = [asold, fsold]
+    return arr
+end
+
+def dodcheck
+    for i in 0..$antalpelareclock
+        if $spelare[i].length = 3
+            $dod[i] = 1
+        end
+    end
 end

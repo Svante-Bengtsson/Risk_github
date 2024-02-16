@@ -17,7 +17,10 @@ set height: 500
 $state = 1
 $startaagd = 0
 #max spelare 4
-$antalspelare = 4
+$antalspelare = 2
+$antalpelareclock = $antalspelare.clone - 1
+$exitinitdepl = (($lander.length.to_i * 3)/$antalspelare.to_i).round
+
 $dod = [0, 0, 0, 0]
 $interface = 0
 $klicka = 0
@@ -28,6 +31,8 @@ $deployphase = 0
 $cursoldiers = 0
 $curland
 $othersold = 0
+$clickstate3 = 0
+$savestateattack = nil
 $spelare = [
     ['#e100ff', '#eb78fa', '#56007a'],
     ['#ff6f00', '#fcab6d', '#a8020a'],
@@ -97,19 +102,39 @@ update do
         updatecontinentess
         if $cursoldiers < 1
             $state = 3
+            createbutton
         end
         
         showcurrsold
 
     elsif $state == 3
-        intloop
+        lager = intloop2
+        if lager != nil && lager.class == Array
+            if lager.length == 2 && $interface == 0
+                $lander[$savestateattack].sold(lager[0])
+                $lander[$attackedsave].sold(lager[1])
+                dodcheck
+            end
+        end
         updatecontinentess
         showcurrsold
         for i in 0..$antalLander
             $lander[i].hover_click_update_attack
         end
     elsif $state == 4
-        intloop
+        lager = intloop3
+        if lager != nil && lager.class == Array
+            if lager.length == 2 && $interface == 0
+                $lander[$savestateattack].sold(lager[0])
+                $lander[$attackedsave].sold(lager[1])
+                dodcheck
+            end
+        end
+        updatecontinentess
+        showcurrsold
+        for i in 0..$antalLander
+            $lander[i].hover_click_update_fortify
+        end
     end
     turcolor
     

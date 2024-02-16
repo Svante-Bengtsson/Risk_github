@@ -1,7 +1,7 @@
 require './standard-deploy-phase.rb'
 
 class Land
-    attr_reader :crikel, :id, :antal, :agd
+    attr_reader :crikel, :id, :antal, :agd, :clickread
     
     def start(x, y, id, a, farg, highlight, terr)
         @antal = a
@@ -14,6 +14,7 @@ class Land
         @agd = 0
         @clicked = 0
         @cont = 0
+        @clickread = @clicked.clone
     end
 
 
@@ -56,7 +57,7 @@ class Land
     def laggsoldater(bussy, land)
         if @agd == 0
             nyfarg($spelare[land][0], $spelare[land][1], $spelare[land][2])
-                $spelare[land][$spelare[land].length] = @id
+            $spelare[land][$spelare[land].length] = @id
         end
         if $spelare[land].index(@id) == nil
             return 0
@@ -97,6 +98,20 @@ class Land
             end
         end
     end
+    def sned(nuvland)
+        for i in 0...$attacker[nuvland].length
+            $spelare
+        end
+        for i in 0..$antalLander
+            for u in 0..($attacker[nuvland].length - 1)
+                if $lander[i].id == $attacker[nuvland][u]
+                    if $spelare[$pelaretur].index($lander[i].id) == nil
+                        $lander[i].attackstate
+                    end
+                end
+            end
+        end
+    end
     def attackstate
         @clicked = 3
     end
@@ -113,6 +128,9 @@ class Land
     def felsok
         return @clicked
     end
+    def fortify 
+        @clicked = 4
+    end 
     
 
     def hover_click_update_deploy
@@ -140,6 +158,7 @@ class Land
                     
                 end
             end
+            @clickread = @clicked.clone
         else
             if @clicked == 1
                 @cirkel.color = 'black'
@@ -174,6 +193,47 @@ class Land
                     
                 end
             end
+            @clickread = @clicked.clone
+        else
+            if @clicked == 1
+                @cirkel.color = 'black'
+            elsif @clicked == 3
+                @cirkel.color = 'silver'
+            end
+        end
+    end
+    def hover_click_update_fortify
+        mousex = Window.mouse_x
+        mousey = Window.mouse_y
+        if $interface == 0
+            if @clicked == 1
+                @cirkel.color = 'black'
+            elsif @clicked == 3 && @cirkel.contains?(Window.mouse_x, Window.mouse_y) == false
+                @cirkel.color = @highlight
+                
+            elsif @clicked == 3 && @cirkel.contains?(Window.mouse_x, Window.mouse_y) == true
+                @cirkel.color = 'purple'
+
+            elsif @clicked == 4
+                @cirkel.color = @highlight
+
+            elsif @clicked == 4 && @cirkel.contains?(Window.mouse_x, Window.mouse_y) == true
+                @cirkel.color = 'purple'
+
+            elsif collission?
+                @cirkel.color = @highlight
+                
+            else 
+                if @cont == 1
+                    @cirkel.color = @terrcol     
+                    
+
+                else
+                    @cirkel.color = @farg 
+                    
+                end
+            end
+            @clickread = @clicked.clone
         else
             if @clicked == 1
                 @cirkel.color = 'black'

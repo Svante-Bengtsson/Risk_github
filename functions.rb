@@ -82,7 +82,6 @@ def intface (pos, ball)
     @soldmenu = 0
 end
 
-
 def intloop
     if @soldmenu == 1
         @intsquare.remove
@@ -124,6 +123,7 @@ def intloop
         @soldmenu = 0
     end 
 end
+
 def intloop2
     if @soldmenu == 1
         @intsquare.remove
@@ -219,7 +219,6 @@ def intloop3
     end 
 end
 
-
 def checkaagdklar
     $startaagd = 1
     
@@ -241,6 +240,7 @@ def turcolor
         $pelareturen.color = $spelare[3][0]
     end
 end
+
 def nextturn
     check = 0
     while check == 0
@@ -275,6 +275,7 @@ def nextturn
         end
     end
 end
+
 def showcurrsold
     $soldnumbtxt.text = $cursoldiers
 end
@@ -298,6 +299,7 @@ def createbutton
         z: 10
     )
 end
+
 def createbutton2
     intx = 480
     inty = 430
@@ -317,6 +319,7 @@ def createbutton2
         z: 10
     )
 end
+
 def attackera(landA, landF)
     asold = ($lander[landA].antal.clone - 1)
     fsold = $lander[landF].antal.clone
@@ -355,11 +358,13 @@ def attackera(landA, landF)
     elsif fsold <= 0
         fsold = 0
     end
+    if fsold == 0 && asold == 0
+        fsold =1
+    end
     asold += 1
     arr = [asold, fsold]
     return arr
 end
-
 
 def dodcheck
     for i in 0..$antalpelareclock
@@ -370,17 +375,16 @@ def dodcheck
 end
 
 def setuptoptxt
-$toptxt = 'Initial Deploy phase'
-$toptext = Text.new(
-    $toptxt,
-    x: 400, y: 0,
-    
-    size: 20,
-    color: 'black',
-    
-    z: 5000
-)
+    $toptxt = 'Initial Deploy phase'
+    $toptext = Text.new(
+        $toptxt,
+        x: 400, y: 0,
+        size: 20,
+        color: 'black',
+        z: 5000
+    )
 end
+
 def toptextupdate
     if $state == 1
         $toptext.remove

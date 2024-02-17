@@ -17,7 +17,6 @@ class Land
         @clickread = @clicked.clone
     end
 
-
     def updateCirkel(x1, x2, x3, x4, y1, y2, y3, y4)
         @cirkel = Quad.new(
             x1: x1, y1: y1,
@@ -28,7 +27,6 @@ class Land
         )
         crikel = @cirkel
     end
-
 
     def soldatnumb
         if @antal.to_s.length == 2
@@ -51,6 +49,7 @@ class Land
         @terrcol = terr
 
     end
+
     def fargen
         @cirkel.color = @farg
     end
@@ -80,6 +79,7 @@ class Land
             return 1
         end
     end
+
     def sold(soldiers)
         @antal = soldiers
         @soldnumb.text = @antal
@@ -88,6 +88,7 @@ class Land
     def clicked
         @clicked = 1
     end
+
     def attacktargets(nuvland)
         for i in 0..$antalLander
             for u in 0..($attacker[nuvland].length - 1)
@@ -99,6 +100,7 @@ class Land
             end
         end
     end
+
     def sned(nuvland)
         arr1 = []
         for i in 0...$attacker[nuvland].length
@@ -142,6 +144,7 @@ class Land
             $lander[i].clickred
         end
     end
+
     def attackstate
         @clicked = 3
     end
@@ -149,21 +152,27 @@ class Land
     def unclicked
         @clicked = 0
     end
+
     def continen
         @cont = 1
     end
+
     def uncontinen
         @cont = 0
     end
+
     def felsok
         return @clicked
     end
+
     def fortify 
         @clicked = 4
     end 
+
     def clickred
         @clickread = @clicked.clone
     end
+
     def hover_click_update_deploy
         mousex = Window.mouse_x
         mousey = Window.mouse_y
@@ -233,6 +242,7 @@ class Land
             end
         end
     end
+
     def hover_click_update_fortify
         mousex = Window.mouse_x
         mousey = Window.mouse_y
@@ -273,7 +283,6 @@ class Land
             end
         end
     end
-
 
     def collission?
         if @cirkel.contains?(Window.mouse_x, Window.mouse_y) == true

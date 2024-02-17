@@ -17,7 +17,7 @@ set height: 500
 $state = 1
 $startaagd = 0
 #max spelare 4
-$antalspelare = 4
+$antalspelare = 3
 $antalpelareclock = $antalspelare.clone - 1
 $exitinitdepl = (($lander.length.to_i * 3)/$antalspelare.to_i).round
 
@@ -112,6 +112,8 @@ update do
 
     elsif $state == 3
         
+        /Attack Phase/
+
         lager = intloop2
         if lager != nil && lager.class == Array
             if lager.length == 2 && $interface == 0
@@ -126,7 +128,9 @@ update do
             $lander[i].hover_click_update_attack
         end
     elsif $state == 4
-       
+        
+        /Fortify Phase/
+
         lager = intloop3
         if lager != nil && lager.class == Array
             if lager.length == 2 && $interface == 0

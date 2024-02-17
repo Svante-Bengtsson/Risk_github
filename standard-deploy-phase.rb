@@ -10,6 +10,7 @@ def howmanysoldiers()
     
     return antal
 end
+
 def continents(land)
     for i in 0...$continentes.length
         $continentes[i][-1] = 1500

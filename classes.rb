@@ -107,7 +107,7 @@ class Land
         fdland = nuvland.clone
         for o in 0..10
             for i in 0...$lander.length
-                if $spelare[$pelaretur].index($lander[i].id) 
+                if $spelare[$pelaretur].index($lander[i].id)  && arr1.index($lander[i].id) == nil
                     for u in 0...arr1.length
                         if $attacker[arr1[u]].index($lander[i].id) != nil
                             arr1.push(i)

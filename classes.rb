@@ -103,42 +103,21 @@ class Land
 
     def sned(nuvland)
         arr1 = []
-        for i in 0...$attacker[nuvland].length
-            if $spelare[$pelaretur].index($attacker[nuvland][i]) != nil && arr1.index($lander[$attacker[nuvland][i]]) == nil
-                $lander[$attacker[nuvland][i]].fortify
-                arr1.push($lander[$attacker[nuvland][i]])
-                for u in 0...$attacker[i].length
-                    if $spelare[$pelaretur].index($attacker[i][u]) != nil && arr1.index($lander[$attacker[i][u]]) == nil
-                        $lander[$attacker[i][u]].fortify
-                        arr1.push($lander[$attacker[i][u]])
-                        for o in 0...$attacker[u].length
-                            if $spelare[$pelaretur].index($attacker[u][o]) != nil && arr1.index($lander[$attacker[u][o]]) == nil
-                                $lander[$attacker[u][o]].fortify
-                                arr1.push($lander[$attacker[u][o]])
-                                for p in 0...$attacker[o].length
-                                    if $spelare[$pelaretur].index($attacker[o][p]) != nil && arr1.index($lander[$attacker[o][p]]) == nil
-                                        $lander[$attacker[o][p]].fortify
-                                        arr1.push($lander[$attacker[o][p]])
-                                        for q in 0...$attacker[p].length
-                                            if $spelare[$pelaretur].index($attacker[p][q]) != nil && arr1.index($lander[$attacker[p][q]]) == nil
-                                                $lander[$attacker[p][q]].fortify
-                                                arr1.push($lander[$attacker[p][q]])
-                                                for m in 0...$attacker[q].length
-                                                    if $spelare[$pelaretur].index($attacker[q][m]) != nil && arr1.index($lander[$attacker[q][m]]) == nil
-                                                        $lander[$attacker[q][m]].fortify
-                                                        arr1.push($lander[$attacker[q][m]])
-                                                        
-                                                    end
-                                                end
-                                            end
-                                        end
-                                    end
-                                end
-                            end
+        arr1.push(nuvland)
+        fdland = nuvland.clone
+        for o in 0..10
+            for i in 0...$lander.length
+                if $spelare[$pelaretur].index($lander[i].id) 
+                    for u in 0...arr1.length
+                        if $attacker[arr1[u]].index($lander[i].id) != nil
+                            arr1.push(i)
                         end
                     end
                 end
             end
+        end
+        for i in 0...arr1.length
+            $lander[arr1[i]].fortify
         end
         for i in 0..$antalLander
             $lander[i].clickred

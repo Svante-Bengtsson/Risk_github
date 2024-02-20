@@ -3,7 +3,7 @@ require './classes.rb'
 require './functions.rb'
 require './mouse-events.rb'
 require './standard-deploy-phase.rb'
-require './attack-karta.rb'
+require './attack-karta2.rb'
 
 
 
@@ -17,9 +17,9 @@ set height: 500
 $state = 1
 $startaagd = 0
 #max spelare 4
-$antalspelare = 3
+$antalspelare = 2
 $antalpelareclock = $antalspelare.clone - 1
-$exitinitdepl = (($lander.length.to_i * 3)/$antalspelare.to_i).round
+$exitinitdepl = (($lander.length.to_i * 2)/$antalspelare.to_i).round
 
 $dod = [0, 0, 0, 0]
 $interface = 0

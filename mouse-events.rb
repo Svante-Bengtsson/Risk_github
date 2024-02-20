@@ -69,6 +69,11 @@ on :mouse_down do |event|
                         if arr[0] == 1
                             $lander[$savestateattack].sold(arr[0])
                             $lander[i].sold(arr[1])
+                            $savestateattack = nil
+                            $attackedsave = nil
+                            for o in 0..$antalLander
+                                $lander[o].unclicked
+                            end
                         elsif arr[1] == 0
                             for u in 0..$antalpelareclock
                                 $spelare[u].delete(i)

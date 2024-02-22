@@ -1,5 +1,10 @@
 require './standard-deploy-phase.rb'
 
+# Det här är klassen som kontrollerar alla länder och all och det mesta som görs med länderna pågår här inne. varje land i listan $lander definieras som ett land i denna classen och ges ett id som är samma som landets plats i $lander.
+# jag har några funktioner som framförallt initierar olika variabler, den viktigaste är .start som initierar alla relativa grundvariabler. sen finns det också .updateCirkel som är den som ritar "spritesen". sen har jag några funktioner som håller koll på färg och soldater som körs kontinuerligt beroende på var i spelet man befinner sig.
+# dessa är hover_click_update_deploy, attack och fortify. det finns också ett antal funktioner som ändrar @clicked till olika saker, dessa behövs så att jag kan sätta vissa länder som klickade
+# den sista viktiga funktionen är .collossion? vilken kollar om musen hovrar över landet, jag skapade en specifik metod för detta då jag använder det så mycket.
+
 class Land
     attr_reader :crikel, :id, :antal, :agd, :clickread
     

@@ -189,8 +189,6 @@ def intloop3
         for i in 0..$antalLander
             $lander[i].unclicked
         end
-        $savestateattack = nil
-        $attackedsave = nil
         $clickstate3 = 0
         $state = 2
         @knappcirc2.remove

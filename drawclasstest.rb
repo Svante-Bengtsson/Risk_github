@@ -1,3 +1,6 @@
+
+
+# Här requirerar jag alla relevanta filer och ruby2d så att jag kan hänvisa till metoderna däri i min game-loop senare
 require 'ruby2d'
 require './classes.rb'
 require './functions.rb'
@@ -6,21 +9,19 @@ require './standard-deploy-phase.rb'
 require './attack-karta2.rb'
 
 
+# här initierar jag antal spelare detta kan ändras mellan 2 och 4
+# max spelare 4
+$antalspelare = 2
 
-
-
-
+# här initierar jag alla startvariabler samt vad fönstret ska heta, bakrundsfärg, min spelar-lista, samt höjd och bredd av fönstret.
 set title: "risk"
 set background: 'blue'
 set width: 800
 set height: 500
 $state = 1
 $startaagd = 0
-#max spelare 4
-$antalspelare = 2
 $antalpelareclock = $antalspelare.clone - 1
 $exitinitdepl = (($lander.length.to_i * 2)/$antalspelare.to_i).round
-
 $dod = [0, 0, 0, 0]
 $interface = 0
 $klicka = 0
@@ -41,6 +42,7 @@ $spelare = [
 ]
 $pelaretur = 0
 
+# Här skapar jag delar av interface-et samt kör setuptoptext som också startar en del av interfacet
 $pelareturen = Rectangle.new(
     x: 0, y: 0,
     width: 800, height: 40,
@@ -57,7 +59,7 @@ $soldnumbtxt = Text.new(
 setuptoptxt
 
 
-
+# här initierar jag alla länders startvariabler samt skapar länderna på kartan och sätter på startnumret av soldater dvs 0
 for i in 0..$antalLander
     $lander[i] = Land.new
     $lander[i].updateCirkel($karta[i][0][0].to_i*5, $karta[i][0][1].to_i*5, $karta[i][0][2].to_i*5, $karta[i][0][3].to_i*5, $karta[i][1][0].to_i*5, $karta[i][1][1].to_i*5, $karta[i][1][2].to_i*5, $karta[i][1][3].to_i*5)
@@ -66,26 +68,29 @@ for i in 0..$antalLander
     
 end
 
-
-
-
-
+# här börjar game-loopen
 update do
+# här sätter jag sätter jag så att jag inte kör hela koden varje tick utan istället bara var femte tick
   if tick % 5 == 0
+# kör toptextupdate så att texten längst upp visar vilken fas man befinner sig i
     toptextupdate
     if $state == 1
         
         /inital deploy phase/
+        # Det här är initial deploy phase, den hanteras till 99% i mouse-events men den finns fortfarande här så att jag kan updatera interfacet. Denna fasen händer bara en gång per spel sen loopas de andra faserna
 
         for i in 0..$antalLander
             $lander[i].hover_click_update_deploy
             updatecontinentess
+            continents(0)
         end
         
 
     elsif $state == 2
         
         /standard deploy phase/
+        # här hanterars framförallt hur många soldater man får och att sätta ut dem. när antal soldater att sätta ut når 0 så går man vidare till nästa fas och skapar en knapp som snvänds för att gå vidare till fasen efter det
+
         if $deployphase == 0
             $cursoldiers = howmanysoldiers
             $deployphase = 1
@@ -113,6 +118,7 @@ update do
     elsif $state == 3
         
         /Attack Phase/
+        # här hanteras bara flyttningen av enheter till det nya landet efter att man attackerat, resten sköts i mouse-events
 
         lager = intloop2
         if lager != nil && lager.class == Array
@@ -130,6 +136,7 @@ update do
     elsif $state == 4
         
         /Fortify Phase/
+        # nästan exakt samma sak som  Attack fasen då det viktiga hanteras i mouse-events 
 
         lager = intloop3
         if lager != nil && lager.class == Array

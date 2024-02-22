@@ -1,6 +1,11 @@
+# det är i mouse events som 90% av logiken hanteras 
+
 on :mouse_down do |event|
     case event.button
     when :left
+
+        # I state 1 Så går den igenom alla spelare och en för en få de sätta ut trupper i ett antal rundor. antalet rundor baseras på hur många länder som finns och hur många spelare som spelar
+
         if $state == 1
             $check = 0
             for i in 0..$antalLander
@@ -19,6 +24,8 @@ on :mouse_down do |event|
             end
             checkaagdklar
         elsif $state == 2
+        # I state 2 så får man sätta ut soldater på någon av sina egna länder tills man har slut på soldater och den går vidare till state 3 
+
             if $interface == 0  
                 for u in 0..$antalLander
                     $lander[u].unclicked
@@ -41,8 +48,8 @@ on :mouse_down do |event|
                 end
             end
         elsif $state == 3
+        # i state 3 attackerar man. detta innebär att första klicket på ett land sparas som första landet man attackerar från och det måste man äga. andra klicket är på det land som man ska attackera, det måste gränsa första landet i $attacker arrayen. om man inte trycker på ett land andra klicket så sätts första klickade landet tillbaka somn oklickat och man måste klicka första klicket igen. man går vidare till state 4 när man trycker på knappen som skapades i state 2. när man klickar på knappen så skapas även knappen för state 4
             if $interface == 0  
-                
                 hovercheck = 0
                 for i in 0..$antalLander
                     if $lander[i].collission? == true
@@ -104,6 +111,7 @@ on :mouse_down do |event|
                 end
             end
         elsif $state == 4
+            # i state 4 attackerar man. det funkar rätt likt state 3 i att man klickar två ggr. första klicket på ett land så kollas .sned för det landet det som det gör är att alla länder som ägs av samma spelare och gränsar någon som gränsar någon... som gränsar den klickade blir highlightade. andra klicket kollar om den man hovrar över är highlightad sen innan och isåfall så  aktiverar den överflyttningen av soldater från den första till den andra
             if $interface == 0  
                 
                 hovercheck = 0

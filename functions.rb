@@ -197,7 +197,7 @@ def intloop3
         $deployphase = 0
         return arr
     elsif @soldmenu == 2
-        if @bb>0 && @sold < $control1
+        if @bb>1 && @sold < $control1
             @sold += 1
             @bb -= 1
         end
@@ -208,7 +208,7 @@ def intloop3
         @soldmenu = 0
         
     elsif @soldmenu == 3
-        if @sold>0 && 
+        if @sold>1 && 
             
             @sold -= 1
             @bb += 1
